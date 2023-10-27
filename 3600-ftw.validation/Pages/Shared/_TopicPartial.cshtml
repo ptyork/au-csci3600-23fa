@@ -1,0 +1,21 @@
+@model CSCI3600.Models.Topic
+
+        @* <tr>
+            <td>@topic.Description</td>
+            <td>@topic.Hours</td>
+        </tr>
+        <tr>
+            <td colspan="2" style="font-size: 6pt;font-style=italic;">@topic.Id</td>
+        </tr> *@
+
+<tr>
+    <td>
+        <a href="~/Topics/@Model.Id">
+            @Model.Description
+        </a>
+    </td>
+    <td>@Model.Hours</td>
+</tr>
+<tr>
+    <td colspan="2" style="font-size: 6pt;font-style=italic;">@Model.Id</td>
+</tr>

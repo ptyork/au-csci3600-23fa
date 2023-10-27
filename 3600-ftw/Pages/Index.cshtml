@@ -1,0 +1,67 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<h1>Welcome to CSCI 3600, Internet Programming!!!</h1>
+
+@{
+    String semester;
+    if (DateTime.Now.Month <= 5)
+    {
+        semester = "Spring";
+    }
+    else if (DateTime.Now.Month <= 7)
+    {
+        semester = "Summer";
+    }
+    else
+    {
+        semester = "Fall";
+    }
+    semester = semester + " " + DateTime.Now.Year;
+}
+
+<h2>@semester</h2>
+
+@if(DateTime.Now.Month <= 5) {
+    <p>
+        It's Spring! The time for all things to get green. And for people to
+        really miss Football season.
+    </p>
+} else if (DateTime.Now.Month <= 7) {
+    <p>
+        Summer! Football practice season!!
+    </p>
+} else {
+    var bob = "yellow";
+
+    <p>
+        Welcome to the class. Because it's Winter, we're going to
+        create assignments with winter themes. You know, like football.
+    </p>
+
+    bob = bob + " belly";
+
+    <span>@bob</span>
+
+}
+
+<div>
+    <h3>Countdown to Class!!</h3>
+    <ul>
+        @for(var cnt = 10; cnt >= 0; cnt--) {
+            if (cnt > 0) {
+                <li>@(cnt)!!!!</li>
+            } else {
+                <li>BLASTOFF!!!</li>
+            }
+        }
+    </ul>
+</div>
+
+<div>
+    <p>DEBUG STUFF</p>
+    <p>Month: @(DateTime.Now.Month)</p>
+</div>

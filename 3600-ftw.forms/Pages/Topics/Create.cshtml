@@ -1,0 +1,26 @@
+@page "{id:Guid?}"
+@namespace CSCI3600.Pages.Topics
+@model CreateModel
+
+@{
+    ViewData["Title"] = "Create Topic";
+}
+
+<h1>Create a New Topic</h1>
+
+
+<form method="post">
+    <input type="hidden" asp-for="Topic.Id" />
+    <div class="form-group">
+        <label asp-for="Topic.Description"></label>
+        <input asp-for="Topic.Description" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Topic.Hours"></label>
+        <input asp-for="Topic.Hours" />
+    </div>
+    <div class="form-group">
+        <input class="btn btn-primary" type="submit" value="Save" />
+        <a class="btn btn-secondary" href="~/Topics/Details/@Model.Topic.Id">Cancel</a>
+    </div>
+</form>

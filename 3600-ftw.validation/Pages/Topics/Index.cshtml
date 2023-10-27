@@ -1,0 +1,36 @@
+﻿@page
+@namespace CSCI3600.Pages.Topics
+@model IndexModel
+
+@{
+    ViewData["title"] = "Topics";
+}
+
+<h1>
+    CSCI 3600 Topics
+    <a class="btn btn-primary" href="~/Topics/Create">Add Topic</a>
+</h1>
+
+
+
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Hours</th>
+    </tr>
+
+    @foreach(var topic in Model.AllTopics)
+    {
+        <tr>
+            <td>
+                <a href="~/Topics/Details/@topic.Id">
+                    @topic.Title
+                </a>
+            </td>
+            <td>
+                @topic.Hours
+            </td>
+        </tr>
+    }
+
+</table>

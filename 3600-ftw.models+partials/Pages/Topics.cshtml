@@ -1,0 +1,37 @@
+﻿@page "{id:Guid?}"
+@model CSCI3600.Pages.TopicsModel
+@{
+    ViewData["title"] = "Topics";
+}
+
+@if (Model.RequestedTopic == null) {
+
+<h1>CSCI 3600 Topics</h1>
+
+<table>
+    <tr>
+        <th>Description</th>
+        <th>Hours</th>
+    </tr>
+
+    @foreach(var topic in Model.AllTopics)
+    {
+        <partial model="topic" name="_TopicPartial" />
+    }
+
+</table>
+
+}
+else
+{
+    <table>
+    <tr>
+        <th>Description</th>
+        <th>Hours</th>
+    </tr>
+
+    <partial model="Model.RequestedTopic" name="_TopicPartial" />
+
+</table>
+
+}

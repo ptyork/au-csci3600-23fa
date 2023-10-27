@@ -1,0 +1,27 @@
+@page "{id:Guid?}"
+@namespace CSCI3600.Pages.Topics
+@model DetailsModel
+
+@{
+    ViewData["Title"] = "Topic Details";
+}
+
+<h1>Details for @Model.Topic.Description</h1>
+
+
+<form method="post">
+    <input type="hidden" asp-for="Topic.Id" />
+    <div class="form-group">
+        <label asp-for="Topic.Description"></label>
+        <input asp-for="Topic.Description" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="Topic.Hours"></label>
+        <input asp-for="Topic.Hours" readonly />
+    </div>
+    <div class="form-group">
+        <a class="btn btn-primary" href="~/Topics/Edit/@Model.Topic.Id">Edit</a>
+        <a class="btn btn-danger" href="~/Topics/Delete/@Model.Topic.Id">Delete</a>
+        <a class="btn btn-secondary" href="~/Topics">Go Back</a>
+    </div>
+</form>
