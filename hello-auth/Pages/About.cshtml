@@ -1,0 +1,21 @@
+﻿@page
+@model AboutModel
+@{
+    ViewData["Title"] = "About";
+}
+
+<div class="text-center">
+    <h1 class="display-4">ABOUT</h1>
+    <h2>Is Admin: @ViewData["IsAdmin"]</h2>
+</div>
+
+
+<form method="post">
+    <input type="radio" name="role" value="none" id="role-none" checked>
+    <label for="role-none">No Role</label>
+    <br>
+    <input type="radio" name="role" value="admin" id="role-admin">
+    <label for="role-admin">Admin Role</label>
+    <br>
+    <input type="submit">
+</form>
