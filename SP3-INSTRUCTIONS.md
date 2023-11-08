@@ -186,7 +186,7 @@ Now we need to modify `Program.cs` so that it uses this new data context class i
 
 Finally, we need to remove any migrations as well as the database. This is because these will contain a reference to the old `IdentityDataContext` and it will cause errors during the build.
 
-  1) In the explorer view, locate and delete the `Areas/Identity/Data/Migrations`` folder
+  1) In the explorer view, locate and delete the `Migrations` folder from the project root
   2) Then ALSO delete `self_promo_FIRSNAME.db` from the project root
   3) Now we have to recreate the database using our "new" `SelfieDataContext`, so rerun the following from the terminal
 
