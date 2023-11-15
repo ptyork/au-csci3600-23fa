@@ -52,25 +52,25 @@ Switch back to the Terminal and Press Ctrl+C to to terminate your `dotnet watch`
 The first thing we'll need to do is to install the .NET Entity Framework tooling. So run the following at the terminal.
 
 ```
-dotnet tool install --global dotnet-ef
+dotnet tool install dotnet-ef --global --version 7.*
 ```
 
 Now run the following command to install the "scaffolding" tooling.
 
 ```
-dotnet tool install -g dotnet-aspnet-codegenerator
+dotnet tool install dotnet-aspnet-codegenerator --global --version 7.*
 ```
 
 Next run each of the following to add the required packages to the CSPROJ file and download them from the NuGet package repository.
 
 ```
-dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
-dotnet add package Microsoft.EntityFrameworkCore.Design
-dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore
-dotnet add package Microsoft.AspNetCore.Identity.UI
-dotnet add package Microsoft.EntityFrameworkCore.SqlServer
-dotnet add package Microsoft.EntityFrameworkCore.Sqlite
-dotnet add package Microsoft.EntityFrameworkCore.Tools
+dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design --version 7.*
+dotnet add package Microsoft.EntityFrameworkCore.Design --version 7.*
+dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 7.*
+dotnet add package Microsoft.AspNetCore.Identity.UI --version 7.*
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.*
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite --version 7.*
+dotnet add package Microsoft.EntityFrameworkCore.Tools --version 7.*
 ```
 
   > NOTE: this is slightly different from the referenced tutorial as we're also adding the Sqlite provider.
@@ -187,7 +187,7 @@ Now we need to modify `Program.cs` so that it uses this new data context class i
 Finally, we need to remove any migrations as well as the database. This is because these will contain a reference to the old `IdentityDataContext` and it will cause errors during the build.
 
   1) In the explorer view, locate and delete the `Migrations` folder from the project root
-  2) Then ALSO delete `self_promo_FIRSNAME.db` from the project root
+  2) Then ALSO delete `self_promo_FIRSTNAME.db` from the project root
   3) Now we have to recreate the database using our "new" `SelfieDataContext`, so rerun the following from the terminal
 
 ```
