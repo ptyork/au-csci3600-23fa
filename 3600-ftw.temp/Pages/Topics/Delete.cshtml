@@ -1,0 +1,38 @@
+@page "{id:Guid?}"
+@namespace CSCI3600.Pages.Topics
+@model DeleteModel
+
+@{
+    ViewData["Title"] = "Delete Topic";
+}
+
+<h1>Are you Sure?</h1>
+
+<h2>Delete this Topic</h2>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <td>@Model.Topic.Id</td>
+    </tr>
+    <tr>
+        <th>Title</th>
+        <td>@Model.Topic.Title</td>
+    </tr>
+    <tr>
+        <th>Hours</th>
+        <td>@Model.Topic.Hours</td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td>@Model.Topic.Description</td>
+    </tr>
+</table>
+
+<form method="post">
+    <input type="hidden" asp-for="Topic.Id" />
+    <div class="form-group">
+        <input class="btn btn-danger" type="submit" value="Yes Delete It" />
+        <a class="btn btn-secondary" href="~/Topics/Details/@Model.Topic.Id">Cancel</a>
+    </div>
+</form>

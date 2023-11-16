@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -8,6 +11,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/_3600_ftw.styles.css" asp-append-version="true" />
 
+    <script src="~/lib/jquery/dist/jquery.min.js"></script> 
     @RenderSection("Head", required: false)
 </head>
 <body>
@@ -28,12 +32,22 @@
                             <a class="nav-link text-dark" href="~/Topics">Topics</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" href="~/Assessment">Assessment</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" href="~/About">About Dr. York</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" href="~/Contact">Contact Me</a>
                         </li>
-                    </ul>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="~/Admin">Admin</a>
+                            </li>
+                        }
+                        <partial name="_LoginPartial" />
+                     </ul>
                 </div>
             </div>
         </nav>

@@ -1,0 +1,84 @@
+﻿@page
+@namespace CSCI3600.Pages
+@model AssessmentModel
+
+@{
+    ViewData["title"] = "Assessment";
+}
+
+@section Head {
+    <style>
+        th, td {
+            vertical-align: top;
+            border: 2px solid black;
+            border-collapse: collapse;
+            padding: 5px 20px;
+        }
+        th {
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-size: 18pt;
+            font-weight: bold;
+        }
+        td ul {
+            margin-bottom: 5px;
+        }
+        .category {
+            font-size: 14pt;
+            font-weight: bold;
+        }
+        .center {
+            text-align: center;
+        }
+    </style>
+}
+
+<h1>
+    CSCI 3600 Assessment
+</h1>
+
+<table>
+    <tr>
+        <th>CATEGORY</th>
+        <th>QUANTITY</th>
+        <th>WEIGHT</th>
+    </tr>
+    <tr>
+        <td>
+            <div class="category">Sample Category</div>
+            <ul>
+                <li>Sample Item ( 100 % )</li>
+            </ul>
+        </td>
+        <td>
+            <div class="category center">1</div>
+        </td>
+        <td>
+            <div class="category center">100 %</div>
+        </td>
+    </tr>
+    @foreach (var category in Model.GradeCategories)
+    {
+        <tr>
+            <td>
+                <div class="category">@category.Name</div>
+                <ul>
+                    @foreach (var item in category.GradeItems)
+                    {
+                        <li>
+                            @item.Name
+                            ( @item.Weight % )
+                        </li>
+                    }
+                </ul>
+            </td>
+            <td>
+                <div class="category center">@category.GradeItems.Count</div>
+            </td>
+            <td>
+                <div class="category center">@category.Weight %</div>
+            </td>
+        </tr>
+    }
+</table>

@@ -2,8 +2,9 @@ namespace CSCI3600.Pages.Topics;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
-using CSCI3600.Models;
+using CSCI3600.Data;
 
 public class DeleteModel : PageModel
 {
@@ -12,19 +13,24 @@ public class DeleteModel : PageModel
 
     // PRIVATE MODEL ATTRIBUTES & CONSTRUCTOR
     private readonly ILogger<DeleteModel> _logger;
-    public DeleteModel(ILogger<DeleteModel> logger)
+    private readonly MyDataContext _context;
+    public DeleteModel(ILogger<DeleteModel> logger, MyDataContext context)
     {
         _logger = logger;
+        _context = context;
         this.Topic = new Topic();
     }
 
-    public IActionResult OnGet(Guid? id)
+    public async Task<IActionResult> OnGetAsync(Guid? id)
     {
         if (id.HasValue)
         {
-            this.Topic = FauxDb.Topics
-                               .Where(t => t.Id == id)
-                               .Single();
+            // this.Topic = FauxDb.Topics
+            //                    .Where(t => t.Id == id)
+            //                    .Single();
+            this.Topic = await _context.Topics
+                                       .Where(t => t.Id == id)
+                                       .SingleAsync();
             return Page();
         }
         else
@@ -34,9 +40,11 @@ public class DeleteModel : PageModel
 
     }
 
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPostAsync()
     {
-        FauxDb.Delete(this.Topic);
+        // FauxDb.Delete(this.Topic);
+        _context.Topics.Remove(this.Topic);
+        await _context.SaveChangesAsync();
         
         return Redirect($"~/Topics");
     }
