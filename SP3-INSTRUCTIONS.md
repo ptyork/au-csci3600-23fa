@@ -359,8 +359,8 @@ Now inside of the class declaration, you'll want a couple of collections to hold
 Add the following properties near the top of your class body.
 
 ```
-    public ICollection<Experience> ProfessionalExperiences { get; set; } = default!
-    public ICollection<Experience> Activities { get; set; } = default!
+    public ICollection<Experience> ProfessionalExperiences { get; set; } = default!;
+    public ICollection<Experience> Activities { get; set; } = default!;
 ```
 
 You also want to use your database context to retrieve data from the database. So you'll need to add a place to "remember" that so that you can use dependency injection to request it in the constructor. So just below the above properties, add the following private field.
@@ -398,6 +398,8 @@ Inside of the OnGetAsync you'll want to query the database TWICE. The first shou
 ```
 
   > NOTE: The ".Include" there is pre-fetching the responsibilities for each experience. Otherwise this navigational property would be empty by default. This may be a clue as to how to earn some extra credit.
+
+  > NOTE 2: If you are just copy/paste-happy, then VisualStudio Code won't "help" you by automatically adding the namespace needed to use the `.Include()` extension method. You can either click on the lightbulb to fix the issue or just add `using Microsoft.EntityFrameworkCore;` at the top to get past any errors related missing methods.
 
 ## Step 11) Database'ify your Experience Page
 
