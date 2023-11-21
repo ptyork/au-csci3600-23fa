@@ -1,0 +1,59 @@
+@page
+@using CSCI3600.Data
+@model CSCI3600.Pages_Admin_GradeItems.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>GradeItem</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="GradeItem.Name" class="control-label"></label>
+                <input asp-for="GradeItem.Name" class="form-control" />
+                <span asp-validation-for="GradeItem.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GradeItem.Type" class="control-label"></label>
+                @* <select asp-for="GradeItem.Type" class="form-control"></select> *@
+                <select asp-for="GradeItem.Type"
+                        asp-items="Html.GetEnumSelectList<GradeItemType>()"
+                        class="form-control" >
+                    <option selected="selected" value="">Please select</option>
+                </select>
+                <span asp-validation-for="GradeItem.Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GradeItem.Description" class="control-label"></label>
+                <input asp-for="GradeItem.Description" class="form-control" />
+                <span asp-validation-for="GradeItem.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GradeItem.Weight" class="control-label"></label>
+                <input asp-for="GradeItem.Weight" class="form-control" />
+                <span asp-validation-for="GradeItem.Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GradeItem.GradeCategoryId" class="control-label"></label>
+                <select asp-for="GradeItem.GradeCategoryId" class ="form-control" asp-items="ViewBag.GradeCategoryId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

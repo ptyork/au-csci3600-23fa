@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <heading>
+        <h1>Javascript and the DOM</h1>
+    </heading>
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html">HOME</a>
+            </li>
+            <li>
+                <a href="js_dom.html">JS + DOM</a>
+            </li>
+            <li>
+                <a href="js_forms.html">JS + Forms</a>
+            </li>
+            <li>
+                <a href="json.html">JSON</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div>
+        <label>Use JS to:</label>
+        <button id="b1">Change Attribute</button>
+        <button id="b2">Change Style</button>
+        <button id="b3">Alter Content</button>
+        <button id="b4">Append Content</button>
+        <button id="b5">Remove Content</button>
+    </div>
+
+    <h2>HEADING 2</h2>
+
+    <p id="p1">First Paragraph below Heading 2</p>
+
+    <p id="p2">Second Paragraph below Heading 2</p>
+
+    <h3>HEADING 3</h3>
+
+    <ul id="linelist">
+        <li>Line 1</li>
+        <li>Line 2</li>
+        <li>Line 3</li>
+        <li>Line 4</li>
+        <li>Line 5</li>
+    </ul>
+
+    <img src="code.jpg" width="500">
+
+    <script>
+        // Change attributes
+        document.getElementById('b1').onclick = function () {
+            let image = document.querySelector('img');
+            // image.width = "1000";
+            image.width = 1000;
+            image.height = 100;
+        };
+
+        // Change style
+        document.getElementById('b2').onclick = function () {
+            let h2 = document.querySelector('h2');
+            h2.style.fontSize = "30pt";
+
+            let li_list = document.querySelectorAll('#linelist li');
+            // li_list.style.fontSize = "20pt";
+            for (let li of li_list) {
+                // console.log(li);
+                li.style.fontWeight = "bold";
+                li.style.textDecoration = "underline";
+                li.style.fontStyle = "italic";
+            }
+        };
+
+        // Alter content
+        document.getElementById('b3').onclick = function () {
+            let ul = document.querySelector("#linelist");
+
+            console.log(ul.innerHTML);
+            console.log(ul.innerText);
+
+            let p1 = document.getElementById("p1");
+            let p2 = document.getElementById("p2");
+
+            p1.innerHTML = "<b>HELLO</b> there. I was altered.";
+            p2.innerText = "<b>HELLO</b> there. I was altered.";
+        };
+
+        // Append content
+        document.getElementById('b4').onclick = function () {
+            let ul = document.querySelector("#linelist");
+
+            ul.innerHTML += "<li>Paul did this the cheat way</li>";
+
+            let li = document.createElement('li');
+            li.innerText = "Paul did this the RIGHT way";
+            ul.appendChild(li);
+        };
+
+        // Remove content
+        document.getElementById('b5').onclick = function () {
+            let p2 = document.getElementById("p2");
+            p2.remove();
+
+            let ul = document.querySelector("#linelist");
+            // ul.lastChild.remove();
+            ul.lastElementChild.remove();
+        };
+
+    </script>
+
+</body>
+</html>

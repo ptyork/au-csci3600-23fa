@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Playground Home</title>
+    <script>
+        // Embedded JS in the <head>
+        // OKEY DOKEY, BUT NOT COMMON TODAY
+        //document.onload(...) // would run after page is done loading
+    </script>
+</head>
+<body>
+    
+    <heading>
+        <h1>Javascript Playground</h1>
+    </heading>
+    
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html">HOME</a>
+            </li>
+            <li>
+                <a href="js_dom.html">JS + DOM</a>
+            </li>
+            <li>
+                <a href="js_forms.html">JS + Forms</a>
+            </li>
+            <li>
+                <a href="json.html">JSON</a>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>JS is EVENT BASED</h2>
+        
+        <div>
+            For example:
+        </div>
+        <ul>
+            <li>onclick - mouse click</li>
+            <li>ondblclick - mouse double click</li>
+            <li>onmouseover - mouse moves over</li>
+            <li>onmouseout - mouse leaves</li>
+            <li>onload - the element has been drawn</li>
+            <li>onchange - form element VALUE changes</li>
+            <li>onfocus - form element gains focus</li>
+            <li>onblur - form element loses focus</li>
+            <li>and many others</li>
+        </ul>
+
+        <div onclick="alert('ho')">
+            Can Use Inline Events
+        </div>
+
+        <div id="clicker1">
+            <div>
+                <div>
+                    <span>Or Bind an Event in JS using a named function...</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="clicker2">
+            ...or an "anonymous" function...
+        </div>
+
+        <div id="clicker3">
+            ...or arrow / lambda function...
+        </div>
+
+        <div id="clicker4">
+            ...or "appended" using addEventListener...
+        </div>
+
+    </main>
+
+    <script>
+        function clicky(e) {
+            // alert(e);
+            // alert(this);
+            console.log(this.id);
+        }
+        let div1 = document.querySelector('#clicker1'); // CSS
+        let div1a = document.getElementById('clicker1'); // JUST ID
+
+        div1.onclick = clicky;
+
+        
+        var clicky2 = function(e) {
+            console.log(this.id);
+        };
+        // div1.onclick = clicky2;
+        
+        
+
+        // THIS IS THE MOST COMMON AND USEFUL OPTION
+        document.querySelector('#clicker2').onclick = function(e) {
+            console.log(this.id);
+        };
+        
+        
+        
+        document.querySelector('#clicker3').onclick = (e) => {
+            alert(e);
+            alert(this);
+        }
+        
+        
+        
+        document.querySelector('#clicker4').addEventListener(
+            'click',
+            function(e) {
+                console.log(this.id);
+            });
+
+        document.querySelector('#clicker4').addEventListener(
+            'click',
+            function(e) {
+                console.log(`${this.id} was clicked`);
+            });
+        
+    </script>
+</body>
+</html>

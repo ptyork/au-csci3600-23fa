@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <heading>
+        <h1>Javascript Playground w/ Forms</h1>
+    </heading>
+    
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html">HOME</a>
+            </li>
+            <li>
+                <a href="js_dom.html">JS + DOM</a>
+            </li>
+            <li>
+                <a href="js_forms.html">JS + Forms</a>
+            </li>
+            <li>
+                <a href="json.html">JSON</a>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+
+        <form>
+            <div>
+                <label for="fname">First Name:</label>
+                <input type="text" name="fname" id="fname"">
+            </div>
+            <div>
+                <label for="lname">Last Name:</label>
+               <input type="text" name="lname" id="lname">
+            </div>
+            <div>
+                Gender:
+                <input type="radio" name="gender" value="male" id="gmale">
+                <label for="gmale">Male</label>
+                <input type="radio" name="gender" value="female" id="gfemale">
+                <label for="gfemale">Female</label>
+                <input type="radio" name="gender" value="other" id="gother">
+                <label for="gother">Other</label>
+                <input type="text" 
+                       name="othergender" 
+                       id="othergender" 
+                       style="display: none">
+            </div>
+            <div>
+                <input type="submit" value="Submit">
+            </div>  
+        </form>
+
+    </main>
+    
+    <script>
+        let form = document.forms[0];
+        // let form = document.querySelector("form");
+
+        // let fname = form.fname;
+        // let fname = form.elements["fname"];
+        let fname = document.getElementById("fname");
+        // fname.value = "paul";
+
+        form.onsubmit = function () {
+            let fname = document.getElementById("fname");
+            if (fname.value == "Paul") {
+                return true;
+            } else {
+                alert("You are not a Paul. Leave Now.");
+                return false;
+            }
+        }
+
+        fname.onkeypress = function () {
+            console.log(`keypress: ${fname.value}`);
+        }
+        fname.onchange =  function () {
+            console.log(`change: ${fname.value}`);
+        }
+        fname.onblur =  function () {
+            console.log(`blur: ${fname.value}`);
+        }
+
+        let genderChanged = function() {
+            console.log(this);
+            console.log(this.checked);
+            if (this.id == "gother") {
+                document.getElementById("othergender").style.display = "inline";
+            } else {
+                document.getElementById("othergender").style.display = "none";
+            }
+        }
+        document.getElementById("gmale").onchange = genderChanged;
+        document.getElementById("gfemale").onchange = genderChanged;
+        document.getElementById("gother").onchange = genderChanged;
+
+    </script>
+</body>
+</html>

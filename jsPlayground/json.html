@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        const obj = {
+            name: "Guinness",
+            age: 5,
+            color: "Black",
+            species: "Golden Doodle",
+            isMale: true
+        };
+
+
+        const arr = [
+            "Guinness",
+            "Stella"
+        ];
+
+
+        const arr_obj = [
+            {
+                name: "Guinness",
+                age: 5,
+                color: "Black",
+                species: "Golden Doodle",
+                isMale: true
+            },
+            {
+                name: "Stella",
+                age: 5,
+                color: "Yellow",
+                species: "Golden Doodle",
+                isMale: false
+            }
+        ];
+        const obj_obj = {
+            guinness: {
+                name: "Guinness",
+                age: 5,
+                color: "Black",
+                species: "Golden Doodle",
+                isMale: true
+            },
+            stella: {
+                name: "Stella",
+                age: 5,
+                color: "Yellow",
+                species: "Golden Doodle",
+                isMale: false
+            },
+            "Hairy Dawg": {
+                name: "Fake UGA",
+                age: 21,
+                color: "Red, White, and Black",
+                species: "Unknown",
+                isMale: "Unknown"
+            }
+        }
+    </script>
+</head>
+<body>
+    <heading>
+        <h1>JSON Playground</h1>
+    </heading>
+    
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html">HOME</a>
+            </li>
+            <li>
+                <a href="js_dom.html">JS + DOM</a>
+            </li>
+            <li>
+                <a href="js_forms.html">JS + Forms</a>
+            </li>
+            <li>
+                <a href="json.html">JSON</a>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <button id="b1">Javascript Object Traversal</button>
+        <button id="b2">Javascript Object Notation</button>
+
+        <div id="dog"></div>
+        <hr>
+        <div id="dogs"></div>
+        <hr>
+        <div id="dawgs"></div>
+        <hr>
+        <div id="json"></div>
+
+    </main>
+
+    <script>
+
+        document.getElementById('b1').onclick = function () {
+            let div = document.getElementById('dog');
+
+            div.innerHTML += `<div>${obj.name}</div>`;
+            div.innerHTML += `<div>${obj.age}</div>`;
+            div.innerHTML += `<div>${obj.species}</div>`;
+            div.innerHTML += `<div>${obj["color"]}</div>`;
+            div.innerHTML += `<div>${obj["isMale"]}</div>`;
+
+            for (let key in obj) {
+                let val = obj[key];
+                div.innerHTML += `<div>${key} = ${val}</div>`;
+            }
+
+
+            let div2 = document.getElementById('dogs');
+            for (let dog of arr) {
+                div2.innerHTML += `<div>${dog}</div>`;
+            }
+
+            for (let dog of arr_obj) {
+                div2.innerHTML += `<div>${dog.name}</div>`;
+                div2.innerHTML += `<div>${dog.age}</div>`;
+                div2.innerHTML += `<div>${dog.species}</div>`;
+                div2.innerHTML += `<div>${dog.color}</div>`;
+                div2.innerHTML += `<div>${dog.isMale}</div>`;
+            }
+
+
+            let div3 = document.getElementById('dawgs');
+            div3.innerHTML += `<div>${obj_obj.guinness.name}</div>`;
+            div3.innerHTML += `<div>${obj_obj['stella'].name}</div>`;
+            div3.innerHTML += `<div>${obj_obj['Hairy Dawg'].name}</div>`;
+        }
+
+        document.getElementById("b2").onclick = function() {
+            let json_str = JSON.stringify(obj_obj);
+            document.getElementById('json').innerHTML += json_str;
+
+            document.getElementById('json').innerHTML += '<h4>';
+
+            let new_obj = JSON.parse(json_str);
+            document.getElementById('json').innerHTML += new_obj;
+            document.getElementById('json').innerHTML += new_obj.guinness.name;
+
+        }
+        
+    </script>
+
+</body>
+</html>
