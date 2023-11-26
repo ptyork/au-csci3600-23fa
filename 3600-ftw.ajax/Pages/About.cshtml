@@ -1,0 +1,19 @@
+﻿@page
+@model AboutModel
+@{
+    ViewData["Title"] = "About";
+}
+
+<h1>CSCI 3600 - Internet Programming</h1>
+<h2>Augusta University</h2>
+
+<table>
+    <tr>
+        <th>Semester</th>
+        <td>@Model.SemesterName</td>
+    </tr>
+    <tr>
+        <th>Instructor</th>
+        <td>@(Model.InstructorName)</td>
+    </tr>
+</table>

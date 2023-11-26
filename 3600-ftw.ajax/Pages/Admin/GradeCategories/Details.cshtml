@@ -1,0 +1,37 @@
+@page
+@model CSCI3600.Pages_Admin_GradeCategories.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>GradeCategory</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GradeCategory.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GradeCategory.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GradeCategory.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GradeCategory.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GradeCategory.Weight)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GradeCategory.Weight)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.GradeCategory?.CategoryId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

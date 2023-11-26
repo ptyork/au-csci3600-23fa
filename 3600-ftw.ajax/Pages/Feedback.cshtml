@@ -1,0 +1,373 @@
+﻿@page
+@{
+    ViewData["Title"] = "Feedback";
+}
+
+<h1>CSCI 3600 Feedback</h1>
+
+<ul id="errors"></ul>
+
+<button id="add_feedback_button">
+    <span>Show</span><span style="display:none">Hide</span>
+    Feedback Form
+</button>
+
+<form id="feedback_form">
+
+    <div>
+        <span class="label">Rating</span>
+        <div class="rating">
+            <label>
+                <input type="radio" id="rating_1" name="rating" value="1" required>
+                1
+            </label>
+            <label>
+                <input type="radio" id="rating_2" name="rating" value="2" required>
+                2
+            </label>
+            <label>
+                <input type="radio" id="rating_3" name="rating" value="3" required>
+                3
+            </label>
+            <label>
+                <input type="radio" id="rating_4" name="rating" value="4" required>
+                4
+            </label>
+            <label>
+                <input type="radio" id="rating_5" name="rating" value="5" required>
+                5
+            </label>
+        </div>
+    </div>
+    <div>
+        <label for="feedback_text">Feedback Text</label>
+        <textarea id="feedback_text" name="text" required minlength="3" maxlength="1000"></textarea>
+    </div>
+    <div>
+        <label for="feedback_email" required>Email Address</label>
+        <input type="email" id="feedback_email" name="email" required>
+    </div>
+    <div>
+        <button>Submit Feedback</button>
+    </div>
+
+</form>
+
+<h2>
+    Past Feedback
+</h2>
+
+<div id="feedback"></div>
+
+
+
+@section Head {
+    <style>
+        #errors {
+            border: 1px solid red;
+            background-color: #F99;
+            display: none;
+        }
+
+        #feedback {
+            border: 2px solid black;
+            margin: 1rem;
+            padding: 0 1rem;
+        }
+        #feedback > div {
+            border-top: 1px dashed black;
+            padding: 1rem 0;
+        }
+        #feedback > div:first-of-type {
+            border-top: none;
+        }
+
+        form {
+            display: none;
+            border: 2px solid black;
+            margin: 1rem;
+            padding: 1rem;
+        }
+        form > div {
+            padding-bottom: 1rem;
+        }
+        label, .label {
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: block;
+        }
+        input, textarea {
+            display: block;
+            width: 100%;
+            padding: 0.5rem;
+        }
+        textarea {
+            height: 7rem;
+        }
+        .rating label {
+            display: inline-block;
+            width: 5rem;
+            text-align: center;
+            padding: 1rem 0;
+            border: 1px solid red;
+            border-radius: 2rem;
+            cursor: pointer;
+        }
+        .rating label.selected {
+            border-color: green;
+            background-color: green;
+            transition: all 0.3s ease;
+        }
+        input[type=radio] {
+            cursor: pointer;
+        }
+
+        button {
+            padding: .5rem 2rem;
+            text-wrap: none;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        // #region Error List Code
+
+        const error_list = document.getElementById("errors");
+
+        function clearErrors() {
+            error_list.innerHTML = '';
+            error_list.style.display = 'none';
+        }
+
+        function addError(err) {
+            error_list.style.display = 'block';
+            let li = document.createElement('li');
+            li.innerText = err;
+            error_list.appendChild(li);
+        }
+        // #endregion
+
+
+        // #region API Call to Get Feedback
+
+        async function getFeedback() {
+            clearErrors();
+            try {
+                let resp = await fetch('/api/feedback');
+                if (!resp.ok) {
+                    throw(`An error occurred retrieving feedback: ${await resp.text()}`);
+                }
+
+                let div = document.getElementById("feedback");
+                div.innerHTML = "";
+
+                let items = await resp.json();
+
+                for (let item of items) {
+                    // showing off date time manipulation
+                    let postedAtDate = new Date(item.postedAt);
+                    let postedAt = postedAtDate.toLocaleString();
+
+                    let rating = item.rating + ' star';
+                    if (item.rating > 1) rating += 's';
+                    
+                    let email = item.email;
+                    
+                    @* let text = item.text; *@
+                    let text = new Option(item.text).innerHTML;
+
+                    div.innerHTML += `
+                    <div>
+                        <b>Posted On</b>: ${postedAt} <br>
+                        <b>Rating</b>: ${rating} <br>
+                        <b>Posted By</b>: ${email} </br>
+                        <b>Feedback</b>: ${text}
+                    </div>
+                    `;
+                }
+            }
+            catch (ex) {
+                addError(ex);
+            }
+        }
+
+        getFeedback();
+
+        // #endregion
+
+
+        const form = document.getElementById('feedback_form');
+        form.reset(); // just because Firefox likes to remember the last values
+
+        // #region API call to POST New Feedback
+
+        form.addEventListener('submit', async function (event) {
+            // STOP THE FORM FROM SUBMITTING...IMPORTANT!!
+            event.preventDefault();
+
+            clearErrors();
+
+            let feedback = {};
+            feedback.rating = form.elements.rating.value;
+            feedback.email = form.elements.email.value;
+            feedback.text = form.elements.text.value;
+
+            // let data = new FormData(form);
+            // let feedback  = Object.fromEntries(data.entries());
+
+            let json = JSON.stringify(feedback);
+            console.log(json);
+            
+            try {
+                let resp = await fetch('/api/feedback', {
+                    method: 'post',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: json
+                });
+                if (!resp.ok) {
+                    throw(`An error occurred while posting feedback: ${await resp.text()}`);
+                }
+            }
+            catch (ex) {
+                addError(ex);
+            }
+
+            await getFeedback();
+            form.reset();
+
+        });
+
+        // #endregion
+
+
+
+        // #region GUI Magic
+
+@* 
+        //////////////////////////////////////////////////
+        // Vanilla JavaScript
+        //////////////////////////////////////////////////
+        //
+        // show / hide feedback form
+        //
+        const button = document.getElementById('add_feedback_button');
+        button.addEventListener('click', function () {
+            // form.style.display is ONLY FOR INLINE STYLES, not CSS
+            if (getComputedStyle(form).display == 'none') {
+                form.style.display = 'block';
+                button.innerText = 'Hide Feedback Form';
+            } else {
+                form.style.display = 'none';
+                button.innerText = 'Show Feedback Form';
+            }
+        });
+
+        // <div class="rating">
+        //     <label>
+        //         <input type="radio" id="rating_1" name="rating" value="1" required>
+        //         1
+        //     </label>
+
+        //
+        // highlight selected rating
+        //   - option 1, just the selected rating
+        //
+        //    1) get all radio buttons that are inside of rating labels
+        let radios = document.querySelectorAll(".rating input");
+        //    2) add change event listeners to each one
+        for (let radio of radios) {
+            radio.addEventListener('change', function (event) {
+        //    3) remove the 'selected' class from all radio labels
+                let labels = document.querySelectorAll(".rating label");
+                for (let label of labels) {
+                    label.classList.remove("selected");
+                }
+
+        //    4) add the 'selected' class only to the label that is the
+        //        parent of the selected radio button.
+                let label = radio.parentElement;
+                label.classList.add('selected');
+
+        //    5) pray it works...
+            });
+        }
+
+
+        //
+        // highlight selected rating
+        //   - option 2, up to and including selected rating
+        //
+        //    1) get all radio buttons that are inside of rating labels
+//        let radios = document.querySelectorAll(".rating input");
+        //    2) add change event listeners to each one
+        for (let radio of radios) {
+            radio.addEventListener('change', function (event) {
+        //    3) get the selected value
+                let selectedValue = radio.value;
+
+        //    4) loop through all of the labels
+                let labels = document.querySelectorAll(".rating label");
+                for (let label of labels) {
+        //    5) find the value of the radio button inside of the label
+        //       (note: can't use 'radio' here because it's the variable
+        //        name used in the outer loop)
+                    let rad = label.querySelector('input');
+                    let value = rad.value;
+        //    6) add or remove the selected class based on whether the value
+        //       is above or below the selected value
+                    if (value <= selectedValue) {
+                        label.classList.add('selected');
+                    } else {
+                        label.classList.remove("selected");
+                    }
+                }
+
+        //    7) pray even harder that it works...
+            });
+        }
+ *@
+ 
+        //////////////////////////////////////////////////
+        // jQuery
+        //////////////////////////////////////////////////
+        //
+        // show / hide feedback form
+        //
+        $('#add_feedback_button').on('click', function () {
+            $('#feedback_form').slideToggle();
+            $('#add_feedback_button span').toggle();
+        });
+
+        //
+        // highlight selected rating
+        //   - option 1, just the selected rating
+        //
+        $('.rating input').on('change', function () {
+            $('.rating label').removeClass('selected');
+            $(this).parent().addClass('selected');
+        });
+
+        //
+        // highlight selected rating
+        //   - option 2, up to and including selected rating
+        //
+        $('.rating input').on('change', function () {
+            let selectedValue = $(this).val();
+            for (label of $('.rating label')) {
+                let value = $(label).find('input').val();
+                if (value <= selectedValue) {
+                    $(label).addClass('selected');
+                } else {
+                    $(label).removeClass('selected');
+                }
+            }
+        });
+ 
+        // #endregion
+
+    </script>
+}

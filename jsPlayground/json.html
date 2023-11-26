@@ -81,6 +81,9 @@
             <li>
                 <a href="json.html">JSON</a>
             </li>
+            <li>
+                <a href="js_fetch.html">AJAX</a>
+            </li>
         </ul>
     </nav>
 
@@ -139,7 +142,7 @@
             let json_str = JSON.stringify(obj_obj);
             document.getElementById('json').innerHTML += json_str;
 
-            document.getElementById('json').innerHTML += '<h4>';
+            document.getElementById('json').innerHTML += '<hr>';
 
             let new_obj = JSON.parse(json_str);
             document.getElementById('json').innerHTML += new_obj;

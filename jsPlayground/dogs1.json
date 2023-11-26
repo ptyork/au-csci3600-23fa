@@ -1,0 +1,23 @@
+[
+    {
+        "name": "Guinness",
+        "age": 5,
+        "color": "Black",
+        "species": "Golden Doodle",
+        "isMale": true
+    },
+    {
+        "name": "Stella",
+        "age": 5,
+        "color": "Yellow",
+        "species": "Golden Doodle",
+        "isMale": false
+    },
+    {
+        "name": "Shiraz",
+        "age": "12 (died 2016)",
+        "color": "Red Merle",
+        "species": "Australian Shepherd",
+        "isMale": false
+    }
+]

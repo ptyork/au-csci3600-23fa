@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #error {
+            border: 1px solid red;
+            background-color: #f99;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <heading>
+        <h1>AJAX Playground</h1>
+    </heading>
+    
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html">HOME</a>
+            </li>
+            <li>
+                <a href="js_dom.html">JS + DOM</a>
+            </li>
+            <li>
+                <a href="js_forms.html">JS + Forms</a>
+            </li>
+            <li>
+                <a href="json.html">JSON</a>
+            </li>
+            <li>
+                <a href="js_fetch.html">AJAX</a>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <button id="fetch">Fetch Dogs</button>
+
+        <hr>
+
+        <div id="dogs"></div>
+
+        <div id="error"></div>
+
+    </main>
+
+    <script>
+
+        document.getElementById('fetch').addEventListener(
+            'click', async function ()
+        {
+
+            try {
+                // fetch('https://something.s.c/something');
+                let dogs_response = await fetch('dogs1.json');
+                console.log(dogs_response.ok);
+                if (dogs_response.ok != true) {
+                    // throw('BAD STUFF');
+                    throw(dogs_response.status + ' - ' + dogs_response.statusText);
+                }
+
+                // let dogs_json = await dogs_response.text();
+                // console.log(dogs_json);
+                // let dogs = JSON.parse(dogs_json);
+                let dogs = await dogs_response.json();
+                console.log(dogs);
+
+                let div = document.getElementById('dogs');
+
+                for (let dog of dogs) {
+                    dog.age += 5;
+                    div.innerHTML += `<div>${dog.name}</div>`;
+                    div.innerHTML += `<div>${dog.age} --- ${typeof(dog.age)}</div>`;
+                    div.innerHTML += `<div>${dog.species}</div>`;
+                    div.innerHTML += `<div>${dog.color}</div>`;
+                    div.innerHTML += `<div>${dog.isMale}</div>`;
+                    div.innerHTML += `<hr>`;
+                }
+            } catch (err) {
+                let errdiv = document.getElementById('error');
+                errdiv.innerText = err;
+                errdiv.style.display = 'block';
+            }
+
+
+        });
+
+    </script>
+
+</body>
+</html>
